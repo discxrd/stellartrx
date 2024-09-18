@@ -1,0 +1,86 @@
+version: "3.9"
+services:
+  admin-bot:
+    depends_on:
+      - api
+    build:
+      dockerfile: Dockerfile
+      context: ./admin_bot
+    restart: always
+    environment:
+      - BOT_TOKEN=
+      - BASE_API_URL=https://stellartrx.com/api/admin
+
+  user-bot:
+    depends_on:
+      - client
+    build:
+      context: ./user_bot
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - TOKEN=
+      - WEBAPP_URL=https://stellartrx.com/
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stellar
+      MYSQL_USER: root1
+      MYSQL_PASSWORD: root1
+    volumes:
+      - ./dbdata:/var/lib/mysql/
+    networks:
+      - net
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: "./nginx"
+    ports:
+      - 80:80
+    networks:
+      - net
+
+  client:
+    environment:
+      - API_BASE_URL="https://stellartrx.com/api/" # API endpoint
+      - PORT=80
+    build:
+      dockerfile: Dockerfile
+      context: ./webview
+    ports:
+      - 5000:5000
+    networks:
+      - net
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - COINPAYMENTS_PUBLIC_KEY=
+      - COINPAYMENTS_PRIVATE_KEY=
+      - COINPAYMENTS_IPN_KEY=
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=stellar
+      - TELEGRAM_USER_BOT_TOKEN=
+      - TELEGRAM_ADMIN_BOT_TOKEN=
+      - TELEGRAM_CHAT_ID=
+    ports:
+      - 3000:3000
+    networks:
+      - net
+    depends_on:
+      - db
+
+networks:
+  net:

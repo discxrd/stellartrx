@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100..900&display=swap');
+
+body, html {
+    margin:0;
+    padding:0;
+    height: 100%;
+    color: white;
+    font-family: 'Ethnocentric Rg', sans-serif;
+    background-image: url("background.jpg");
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2%;
+    height: 100%;
+    width: 100%;
+}
+
+.box {
+    display: flex;
+    background-color: #002a37;
+    border: 1px solid #00526c;
+    border-radius: 20px;
+    justify-content: center;
+    text-align: center;
+    font-style: italic;
+    font-size: 2.5vh;
+    padding: 0px 20px;
+}
+
+h1 {
+    font-size: 2.5vh;
+}
+
+a {
+    font-size: 8vh;
+}

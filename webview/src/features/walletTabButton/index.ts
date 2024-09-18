@@ -1,0 +1,1 @@
+export { WalletTabButton } from "./ui";

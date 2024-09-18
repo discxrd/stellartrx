@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+* {
+  transition: opacity 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+  transition: display 0.2s ease-out;
+}
